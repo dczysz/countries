@@ -1,5 +1,10 @@
 const axios = require('axios');
-const { GraphQLObjectType, GraphQLString, GraphQLSchema } = require('graphql');
+const {
+  GraphQLObjectType,
+  GraphQLString,
+  GraphQLInt,
+  GraphQLSchema,
+} = require('graphql');
 
 const CountryType = new GraphQLObjectType({
   name: 'Country',
@@ -25,9 +30,9 @@ const RootQuery = new GraphQLObjectType({
       resolve(parent, args) {
         return axios
           .get(
-            `https://restcountries.eu/rest/v2/name/${args.name}?fields=${COUNTRY_QUERY_FIELDS}`
+            `https://restcountries.eu/rest/v2/alpha/${args.name}?fields=${COUNTRY_QUERY_FIELDS}`
           )
-          .then(res => res.data[0]);
+          .then(res => res.data);
       },
     },
   },
